@@ -63,6 +63,12 @@ List::~List(){
 	delete nine;
 }
 
+// Description: Doubles the array size.
+//				firstDigit is the first number in the careCard
+// Postcondition: Array size is doubled.
+bool List::resize(int firstDigit){
+
+}
 
 // Description: Returns the total element count currently stored in List.
 int List::getElementCount() const{

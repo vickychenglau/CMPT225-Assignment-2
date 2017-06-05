@@ -52,6 +52,10 @@ public:
 	// Deconstructor
 	~List();
 
+	// Description: Doubles the array size.
+	// Postcondition: Array size is doubled.
+	bool resize();
+
 // *** Start of Public Interface ***
 // Note: Public Interface must not be modified.
 
