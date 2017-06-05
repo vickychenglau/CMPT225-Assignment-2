@@ -19,7 +19,7 @@
 using namespace std;
 
 // Default constructor
-List::List() : {
+List::List(){
 	int index;
 
 	for( index=0; index<10; index++ ){
@@ -59,7 +59,7 @@ bool List::remove( const Patient& toBeRemoved ){
 	
 // Description: Remove all elements.
 void List::removeAll(){
-	return true;
+	
 }
    
 // Description: Search for target element and returns a pointer to it if found,
