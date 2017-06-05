@@ -49,6 +49,24 @@ List::List(){
 	elementPtr[9] = nine;
 }
 
+// Deconstructor
+List::~List(){
+	// You need to write this!
+	if(head != NULL){
+		Node *prev = head;
+		Node *curr = head;
+
+		while( curr != NULL ){
+			prev = curr;
+			curr = curr->next;
+			delete prev;
+		}
+	}
+	
+	cout << "Destructor called!" << endl;
+}
+
+
 // Description: Returns the total element count currently stored in List.
 int List::getElementCount() const{
 	int index;
@@ -104,8 +122,16 @@ Patient* List::search(const Patient& target){
 }
    
 // Description: Prints all n elements stored in List in sort order and does so in O(n).
+// *Dunno if it works yet. DELETE COMMENT BEFORE SUBMISSION
 void List::printList(){
+	int index;
+	int index2;
 
+	for( index=0; index<10; index++ ){
+		for( index2 = 0; index2 < elementCount[index]; index2++ ){
+			(elementPtr[index] + index2).printPatient();
+		}
+	}
 }
 
 // End of List.cpp

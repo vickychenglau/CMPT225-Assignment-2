@@ -49,6 +49,9 @@ public:
 	// Default constructor
 	List();
 
+	// Deconstructor
+	~List();
+
 // *** Start of Public Interface ***
 // Note: Public Interface must not be modified.
 
