@@ -8,8 +8,8 @@
  *                   - Its data structure is expandable: when full, it expands to accommodate 
  *                     new insertion. This is done unbeknown to the client code.
  *
- * Last modified on: May 2017
- * Author: AL
+ * Last modified on: June 2017
+ * Author: Vicky Lau, Jacky Tse
  */
 
 #pragma once
@@ -21,7 +21,12 @@ using namespace std;
 
 class List  {
 
-private:	
+private:
+	static const int MIN_CAPACITY = 1;	// So we can have the array at a certain size
+
+	int elementCount[10];
+	int capacity[10];
+
 	Patient *elementPtr[10];	// Array of pointers
 	Patient *zero;
 	Patient *one;
