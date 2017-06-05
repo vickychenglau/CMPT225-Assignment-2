@@ -22,7 +22,7 @@ using namespace std;
 class List  {
 
 private:
-	static const int MIN_CAPACITY = 1;	// So we can have the array at a certain size
+	static const int INIT_CAPACITY = 1;	// So we can have the array at a certain size
 
 	int elementCount[10];
 	int capacity[10];

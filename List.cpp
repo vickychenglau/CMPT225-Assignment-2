@@ -24,18 +24,18 @@ List::List(){
 
 	for( index=0; index<10; index++ ){		
 		elementCount[index] = 0;
-		capacity[index] = MIN_CAPACITY;
+		capacity[index] = INIT_CAPACITY;
 	}
-	zero  = new Patient[MIN_CAPACITY];
-	one   = new Patient[MIN_CAPACITY];
-	two   = new Patient[MIN_CAPACITY];
-	three = new Patient[MIN_CAPACITY];
-	four  = new Patient[MIN_CAPACITY];
-	five  = new Patient[MIN_CAPACITY];
-	six   = new Patient[MIN_CAPACITY];
-	seven = new Patient[MIN_CAPACITY];
-	eight = new Patient[MIN_CAPACITY];
-	nine  = new Patient[MIN_CAPACITY];
+	zero  = new Patient[INIT_CAPACITY];
+	one   = new Patient[INIT_CAPACITY];
+	two   = new Patient[INIT_CAPACITY];
+	three = new Patient[INIT_CAPACITY];
+	four  = new Patient[INIT_CAPACITY];
+	five  = new Patient[INIT_CAPACITY];
+	six   = new Patient[INIT_CAPACITY];
+	seven = new Patient[INIT_CAPACITY];
+	eight = new Patient[INIT_CAPACITY];
+	nine  = new Patient[INIT_CAPACITY];
 
 	elementPtr[0] = zero;
 	elementPtr[1] = one;
@@ -51,19 +51,16 @@ List::List(){
 
 // Deconstructor
 List::~List(){
-	// You need to write this!
-	if(head != NULL){
-		Node *prev = head;
-		Node *curr = head;
-
-		while( curr != NULL ){
-			prev = curr;
-			curr = curr->next;
-			delete prev;
-		}
-	}
-	
-	cout << "Destructor called!" << endl;
+	delete zero;
+	delete one;
+	delete two;
+	delete three;
+	delete four;
+	delete five;
+	delete six;
+	delete seven;
+	delete eight;
+	delete nine;
 }
 
 
@@ -85,6 +82,7 @@ int List::getElementCount() const{
 // Precondition: newElement must not already be in data collection.  
 // Postcondition: newElement inserted and the appropriate elementCount has been incremented.	
 bool List::insert(const Patient& newElement){
+
 	return true;
 }
 
@@ -97,7 +95,11 @@ bool List::remove( const Patient& toBeRemoved ){
 	
 // Description: Remove all elements.
 void List::removeAll(){
+	int index;
 
+	for( index = 0; index < 10; index++ ){		
+		elementCount[index] = 0;
+	}
 }
    
 // Description: Search for target element and returns a pointer to it if found,
