@@ -66,19 +66,31 @@ List::~List(){
 // Description: Doubles the array size.
 //				firstDigit is the first number in the careCard
 // Postcondition: Array size is doubled.
-bool List::resize(int firstDigit){
+void List::resize(int firstDigit)
+{
+	capacity[firstDigit] = capacity[firstDigit] * 2;
+	cout << "Capacity " << capacity[firstDigit] << endl;
+	Patient * temp = new Patient[capacity[firstDigit]];
+
+	memcpy(temp, elementPtr[firstDigit], elementCount[firstDigit] * sizeof(Patient));
+	delete [] elementPtr[firstDigit];
+	elementPtr[firstDigit] = temp;
 
 }
 
 // Description: Returns the total element count currently stored in List.
-int List::getElementCount() const{
-	int index;
-	int total;
+int List::firstCareCardNum(const Patient& target)
+{
 
-	for( index=0; index<10; index++ ){
-		total += elementCount[index];
-	}
-	return total;
+	int digit = (target.getCareCard())[0];
+	return(digit - 48);
+}
+
+int List::firstCareCardNum(const Patient& target)
+{
+
+	int digit = (target.getCareCard())[0];
+	return(digit - 48);
 }
 
 // Description: Insert an element.
@@ -87,8 +99,66 @@ int List::getElementCount() const{
 //              If the insertion is successful, true is returned otherwise, false is returned.
 // Precondition: newElement must not already be in data collection.  
 // Postcondition: newElement inserted and the appropriate elementCount has been incremented.	
-bool List::insert(const Patient& newElement){
+bool List::insert(const Patient& newElement)
+{
+	Patient *temp;													//Temp is used to hold on to the array so we can search through it
+	Patient compare;												//Used to compare object in array with our target
+	bool wasInserted = false;
+	int firstDigit = firstCareCardNum(newElement);
+	cout <<"first digit is... " << firstDigit << endl;
 
+	temp = elementPtr[firstDigit];
+
+	for(int index = 0; index < elementCount[firstDigit]; index++)	//We cycle through the entire array based on element count
+	{
+		compare = temp[index];										//Update compare with the next object
+		if(compare.operator==(newElement)) 								//If we find a match 
+		{
+			cout << "Target Found cannot insert";
+			return(false);									//We return object that we found
+		}
+	}
+
+	//Check to see if the array is full
+	if(elementCount[firstDigit] == capacity[firstDigit])
+	{
+		cout<< "it is full" << endl;
+		resize(firstDigit);
+	}
+	cout << "E count " << elementCount[firstDigit] << "capacity: "<< capacity[firstDigit] << endl;
+	if(elementCount == 0)		//Only for an empty list
+    {
+    	elementPtr[firstDigit][0] = newElement;		//We stick the emelent at the begining
+    	elementCount[firstDigit]++;
+    	//cout << "added one " << getElementCount() << endl;
+    }
+    else
+    {
+    	for(int index = elementCount[firstDigit] - 1; index >= 0; index--)	//We cycle through the list to find where the elemet should be
+    	{
+    		//cout << "In loop " << i << endl;
+    		compare = temp[index];
+    		if(compare.operator>(newElement))
+    		{
+    			//cout << "temp: " << temp.getCareCard() << "and i+1 is " << i+1 << endl; 
+    			temp[index + 1] = compare;
+    		}
+    		else 			//When we find a place where element is nolonger the smaller than current we insert
+    		{
+    			//cout << "done" <<endl;
+    			temp[index+1] = newElement;
+    			index = 0;
+    			wasInserted = true; //Switch if insert is commite dones happen when we make it to the end of list
+    		}
+    	}
+	    if(!wasInserted)
+	    {
+	    	temp[0] = newElement;
+	    }
+    	elementCount[firstDigit]++;
+    }
+
+	cout << "Capacity : " << capacity[firstDigit] << "and Element Count is: " << elementCount[firstDigit] << endl;
 	return true;
 }
 
@@ -137,7 +207,7 @@ void List::printList(){
 
 	for( index=0; index<10; index++ ){
 		for( index2 = 0; index2 < elementCount[index]; index2++ ){
-			(elementPtr[index] + index2).printPatient();
+			(elementPtr[index] + index2)->printPatient();
 		}
 	}
 }
