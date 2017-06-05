@@ -13,6 +13,8 @@
  */
 
 #include <string>
+#include <iostream>
+#include <cstring>
 #include "Patient.h"
 #include "List.h"
 
@@ -26,6 +28,7 @@ List::List(){
 		elementCount[index] = 0;
 		capacity[index] = INIT_CAPACITY;
 	}
+
 	zero  = new Patient[INIT_CAPACITY];
 	one   = new Patient[INIT_CAPACITY];
 	two   = new Patient[INIT_CAPACITY];
@@ -51,16 +54,11 @@ List::List(){
 
 // Deconstructor
 List::~List(){
-	delete zero;
-	delete one;
-	delete two;
-	delete three;
-	delete four;
-	delete five;
-	delete six;
-	delete seven;
-	delete eight;
-	delete nine;
+	/**
+	for(int i; i < 10; i++)
+	{
+		delete[] elementPtr[i];
+	}**/
 }
 
 // Description: Doubles the array size.
@@ -78,7 +76,7 @@ void List::resize(int firstDigit)
 
 }
 
-// Description: Returns the total element count currently stored in List.
+// Description: Gets the first digit of the Patients' care card number and returns it
 int List::firstCareCardNum(const Patient& target)
 {
 
@@ -86,11 +84,17 @@ int List::firstCareCardNum(const Patient& target)
 	return(digit - 48);
 }
 
-int List::firstCareCardNum(const Patient& target)
+// Description: Returns the total element count currently stored in List.
+int List::getElementCount() const
 {
+	int index;
+	int total;
 
-	int digit = (target.getCareCard())[0];
-	return(digit - 48);
+	for( index=0; index<10; index++ ){
+		total += elementCount[index];
+	}
+
+	return (total);
 }
 
 // Description: Insert an element.
@@ -108,16 +112,6 @@ bool List::insert(const Patient& newElement)
 	cout <<"first digit is... " << firstDigit << endl;
 
 	temp = elementPtr[firstDigit];
-
-	for(int index = 0; index < elementCount[firstDigit]; index++)	//We cycle through the entire array based on element count
-	{
-		compare = temp[index];										//Update compare with the next object
-		if(compare.operator==(newElement)) 								//If we find a match 
-		{
-			cout << "Target Found cannot insert";
-			return(false);									//We return object that we found
-		}
-	}
 
 	//Check to see if the array is full
 	if(elementCount[firstDigit] == capacity[firstDigit])
@@ -170,7 +164,9 @@ bool List::remove( const Patient& toBeRemoved ){
 }
 	
 // Description: Remove all elements.
-void List::removeAll(){
+void List::removeAll()
+{
+
 	int index;
 
 	for( index = 0; index < 10; index++ ){		
@@ -180,14 +176,18 @@ void List::removeAll(){
    
 // Description: Search for target element and returns a pointer to it if found,
 //              otherwise, returns NULL.
-Patient* List::search(const Patient& target){
+Patient* List::search(const Patient& target)
+{
+
+	//cout << "1 ";
 	Patient *temp;													//Temp is used to hold on to the array so we can search through it
-	int firstDigit = (target.getCareCard())[0];						//We Pull the first value out
-
+	//cout << "2 ";
+	int firstDigit = firstCareCardNum(target);						//Getting the first digit and storing it
+	//cout << "3 ";
 	temp = elementPtr[firstDigit];									//Temp will hold onto the array of element ptr
-
-	Patient compare;												//Used to compare object in array with out target
-
+	//cout << "4 ";
+	Patient compare;												//Used to compare object in array with our target
+	//cout << "5 ";
 	for(int index = 0; index < elementCount[firstDigit]; index++)	//We cycle through the entire array based on element count
 	{
 		compare = temp[index];										//Update compare with the next object
@@ -196,12 +196,14 @@ Patient* List::search(const Patient& target){
 			return(&temp[index]);									//We return object that we found
 		}
 	}
+	//cout << "6 ";
 	return(NULL);													//Target Not Found
 }
    
 // Description: Prints all n elements stored in List in sort order and does so in O(n).
 // *Dunno if it works yet. DELETE COMMENT BEFORE SUBMISSION
-void List::printList(){
+void List::printList()
+{
 	int index;
 	int index2;
 
