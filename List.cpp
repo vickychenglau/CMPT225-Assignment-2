@@ -85,8 +85,22 @@ void List::removeAll(){
 // Description: Search for target element and returns a pointer to it if found,
 //              otherwise, returns NULL.
 Patient* List::search(const Patient& target){
-	Patient *temp;
-	return temp;
+	Patient *temp;													//Temp is used to hold on to the array so we can search through it
+	int firstDigit = (target.getCareCard())[0];						//We Pull the first value out
+
+	temp = elementPtr[firstDigit];									//Temp will hold onto the array of element ptr
+
+	Patient compare;												//Used to compare object in array with out target
+
+	for(int index = 0; index < elementCount[firstDigit]; index++)	//We cycle through the entire array based on element count
+	{
+		compare = temp[index];										//Update compare with the next object
+		if(compare.operator==(target)) 								//If we find a match 
+		{
+			return(&temp[index]);									//We return object that we found
+		}
+	}
+	return(NULL);													//Target Not Found
 }
    
 // Description: Prints all n elements stored in List in sort order and does so in O(n).
