@@ -22,11 +22,31 @@ using namespace std;
 List::List(){
 	int index;
 
-	for( index=0; index<10; index++ ){
-		elementPtr[index]   = NULL;
+	for( index=0; index<10; index++ ){		
 		elementCount[index] = 0;
 		capacity[index] = MIN_CAPACITY;
 	}
+	zero  = new Patient[MIN_CAPACITY];
+	one   = new Patient[MIN_CAPACITY];
+	two   = new Patient[MIN_CAPACITY];
+	three = new Patient[MIN_CAPACITY];
+	four  = new Patient[MIN_CAPACITY];
+	five  = new Patient[MIN_CAPACITY];
+	six   = new Patient[MIN_CAPACITY];
+	seven = new Patient[MIN_CAPACITY];
+	eight = new Patient[MIN_CAPACITY];
+	nine  = new Patient[MIN_CAPACITY];
+
+	elementPtr[0] = zero;
+	elementPtr[1] = one;
+	elementPtr[2] = two;
+	elementPtr[3] = three;
+	elementPtr[4] = four;
+	elementPtr[5] = five;
+	elementPtr[6] = six;
+	elementPtr[7] = seven;
+	elementPtr[8] = eight;
+	elementPtr[9] = nine;
 }
 
 // Description: Returns the total element count currently stored in List.
@@ -59,7 +79,7 @@ bool List::remove( const Patient& toBeRemoved ){
 	
 // Description: Remove all elements.
 void List::removeAll(){
-	
+
 }
    
 // Description: Search for target element and returns a pointer to it if found,
