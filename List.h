@@ -54,7 +54,7 @@ public:
 
 	// Description: Doubles the array size.
 	// Postcondition: Array size is doubled.
-	bool resize();
+	void resize();
 
 // *** Start of Public Interface ***
 // Note: Public Interface must not be modified.
