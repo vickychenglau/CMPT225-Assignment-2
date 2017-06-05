@@ -22,6 +22,17 @@ using namespace std;
 class List  {
 
 private:	
+	Patient *elementPtr[10];	// Array of pointers
+	Patient *zero;
+	Patient *one;
+	Patient *two;
+	Patient *three;
+	Patient *four;
+	Patient *five;
+	Patient *six;
+	Patient *seven;
+	Patient *eight;
+	Patient *nine;
 
 // We must complete this section
 
