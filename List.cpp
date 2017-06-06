@@ -72,15 +72,15 @@ void List::resize(int firstDigit)
 
 	int index;
 
-	for( index = 0; index < elementCount[0]; index++ ){
-		cout << "before resize: " << zero[index].getCareCard() << endl;
+	for( index = 0; index < elementCount[firstDigit]; index++ ){
+		cout << "before resize: " << elementPtr[firstDigit][index].getCareCard() << endl;
 	}
 
-	memcpy(temp, elementPtr[firstDigit], capacity[firstDigit] * sizeof(Patient));
+	copy(elementPtr[firstDigit], elementPtr[firstDigit] + capacity[firstDigit]/2, temp);
 
 	delete [] elementPtr[firstDigit];
 
-	for( index = 0; index < elementCount[0]; index++ ){
+	for( index = 0; index < elementCount[firstDigit]; index++ ){
 		cout << "after resize: " << temp[index].getCareCard() << endl;
 	}
 
@@ -126,7 +126,6 @@ bool List::insert(const Patient& newElement)
 
 	cout << "first digit: " << firstDigit << endl;
 
-	temp = elementPtr[firstDigit];
 	
 
 	//Check to see if the array is full
@@ -138,10 +137,12 @@ bool List::insert(const Patient& newElement)
 
 	cout << "E count: " << elementCount[firstDigit] 
 		 << ", capacity: "<< capacity[firstDigit] << endl;
+
+	temp = elementPtr[firstDigit];
 	
 	if(elementCount == 0)		//Only for an empty list
     {
-    	elementPtr[firstDigit][0] = newElement;		//We stick the element at the beginning
+    	temp[0] = newElement;		//We stick the element at the beginning
     	elementCount[firstDigit]++;
     	//cout << "added one " << getElementCount() << endl;
     }
@@ -153,17 +154,18 @@ bool List::insert(const Patient& newElement)
     	for(index = elementCount[firstDigit] - 1; index >= 0; index--)	//We cycle through the list to find where the elemet should be
     	{
     		cout << "In loop " << index << endl;
-    		compare = (elementPtr[firstDigit])[index];
+    		compare = temp[index];
     		if(compare.operator>(newElement))
     		{
-    			//cout << "temp: " << temp.getCareCard() << " and i+1 is " << i+1 << endl; 
-    			(elementPtr[firstDigit])[index+1] = compare;
+    			cout << "Compare: " << compare.getCareCard() << " and index+1 is " << index+1 << endl; 
+    			temp[index+1] = compare;
+    			cout << "not here?" << endl;
     		}
     		//When we find a place where element is nolonger the smaller than current we insert
     		else
     		{
     			//cout << "done" <<endl;
-    			(elementPtr[firstDigit])[index+1] = newElement;
+    			temp[index+1] = newElement;
     			index = 0;
     			wasInserted = true; //Switch if insert is commite dones happen when we make it to the end of list
     		}
