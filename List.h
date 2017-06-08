@@ -26,18 +26,7 @@ private:
 
 	int elementCount[10];
 	int capacity[10];
-
-	Patient *elementPtr[10];	// Array of pointers
-	Patient *zero;
-	Patient *one;
-	Patient *two;
-	Patient *three;
-	Patient *four;
-	Patient *five;
-	Patient *six;
-	Patient *seven;
-	Patient *eight;
-	Patient *nine;
+	Patient *elementPtr[10];	// Array of pointers to arrays
 
 // We must complete this section
 
@@ -54,7 +43,10 @@ public:
 
 	// Description: Doubles the array size.
 	// Postcondition: Array size is doubled.
-	void resize();
+	void resize(int firstDigit);
+
+	// Description: Returns the total element count currently stored in List.
+	int firstCareCardNum(const Patient& target);
 
 // *** Start of Public Interface ***
 // Note: Public Interface must not be modified.
