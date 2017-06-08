@@ -24,41 +24,21 @@ using namespace std;
 List::List(){
 	int index;
 
-	for( index=0; index<10; index++ ){		
+	for( index=0; index<10; index++ ){
+		elementPtr[index] = new Patient[INIT_CAPACITY];	
 		elementCount[index] = 0;
 		capacity[index] = INIT_CAPACITY;
 	}
-
-	zero  = new Patient[INIT_CAPACITY];
-	one   = new Patient[INIT_CAPACITY];
-	two   = new Patient[INIT_CAPACITY];
-	three = new Patient[INIT_CAPACITY];
-	four  = new Patient[INIT_CAPACITY];
-	five  = new Patient[INIT_CAPACITY];
-	six   = new Patient[INIT_CAPACITY];
-	seven = new Patient[INIT_CAPACITY];
-	eight = new Patient[INIT_CAPACITY];
-	nine  = new Patient[INIT_CAPACITY];
-
-	elementPtr[0] = zero;
-	elementPtr[1] = one;
-	elementPtr[2] = two;
-	elementPtr[3] = three;
-	elementPtr[4] = four;
-	elementPtr[5] = five;
-	elementPtr[6] = six;
-	elementPtr[7] = seven;
-	elementPtr[8] = eight;
-	elementPtr[9] = nine;
 }
 
 // Deconstructor
 List::~List(){
-	/**
-	for(int i; i < 10; i++)
+	/*
+	for(int index; index < 10; index++)
 	{
-		delete[] elementPtr[i];
-	}**/
+		delete [] elementPtr[index];
+	}
+	*/
 }
 
 // Description: Doubles the array size.
@@ -91,7 +71,6 @@ void List::resize(int firstDigit)
 // Description: Gets the first digit of the Patients' care card number and returns it
 int List::firstCareCardNum(const Patient& target)
 {
-
 	int digit = (target.getCareCard())[0];
 	return(digit - 48);
 }
@@ -117,69 +96,28 @@ int List::getElementCount() const
 // Postcondition: newElement inserted and the appropriate elementCount has been incremented.	
 bool List::insert(const Patient& newElement)
 {
-	Patient *temp;													//Temp is used to hold on to the array so we can search through it
-	Patient compare;												//Used to compare object in array with our target
+	Patient temp;
 	
-	bool wasInserted = false;
 	int firstDigit = firstCareCardNum(newElement);
-	int index;
+	int index = elementCount[firstDigit];
 
-	cout << "first digit: " << firstDigit << endl;
-
-	
-
-	//Check to see if the array is full
-	if(elementCount[firstDigit] == capacity[firstDigit])
-	{
-		cout<< "it is full" << endl;
+	//Check to see if the array is full and needs to be increased
+	if(elementCount[firstDigit] == capacity[firstDigit]){
 		resize(firstDigit);
 	}
 
-	cout << "E count: " << elementCount[firstDigit] 
-		 << ", capacity: "<< capacity[firstDigit] << endl;
+	(elementPtr[firstDigit])[index] = newElement;
+	elementCount[firstDigit]++;
 
-	temp = elementPtr[firstDigit];
-	
-	if(elementCount == 0)		//Only for an empty list
-    {
-    	temp[0] = newElement;		//We stick the element at the beginning
-    	elementCount[firstDigit]++;
-    	//cout << "added one " << getElementCount() << endl;
-    }
-    else
-    {
-    	cout << "in sorting insert, " << endl;
+	// Keeps the array sorted
+	while( index > 0 && elementPtr[firstDigit][index-1].operator>(elementPtr[firstDigit][index]) ){
+    		temp = (elementPtr[firstDigit])[index];
+    		(elementPtr[firstDigit])[index] = (elementPtr[firstDigit])[index-1];
+    		(elementPtr[firstDigit])[index-1] = temp;
 
-
-    	for(index = elementCount[firstDigit] - 1; index >= 0; index--)	//We cycle through the list to find where the elemet should be
-    	{
-    		cout << "In loop " << index << endl;
-    		compare = temp[index];
-    		if(compare.operator>(newElement))
-    		{
-    			cout << "Compare: " << compare.getCareCard() << " and index+1 is " << index+1 << endl; 
-    			temp[index+1] = compare;
-    			cout << "not here?" << endl;
-    		}
-    		//When we find a place where element is nolonger the smaller than current we insert
-    		else
-    		{
-    			//cout << "done" <<endl;
-    			temp[index+1] = newElement;
-    			index = 0;
-    			wasInserted = true; //Switch if insert is commite dones happen when we make it to the end of list
-    		}
-    	}
-
-	    if(!wasInserted)
-	    {
-	    	temp[0] = newElement;
-	    }
-
-    	elementCount[firstDigit]++;
+    		index--;
     }
 
-	cout << "Capacity : " << capacity[firstDigit] << "and Element Count is: " << elementCount[firstDigit] << endl;
 	return true;
 }
 
@@ -193,7 +131,6 @@ bool List::remove( const Patient& toBeRemoved ){
 // Description: Remove all elements.
 void List::removeAll()
 {
-
 	int index;
 
 	for( index = 0; index < 10; index++ ){		
@@ -205,7 +142,6 @@ void List::removeAll()
 //              otherwise, returns NULL.
 Patient* List::search(const Patient& target)
 {
-
 	//cout << "1 ";
 	Patient *temp;													//Temp is used to hold on to the array so we can search through it
 	//cout << "2 ";
@@ -228,7 +164,6 @@ Patient* List::search(const Patient& target)
 }
    
 // Description: Prints all n elements stored in List in sort order and does so in O(n).
-// *Dunno if it works yet. DELETE COMMENT BEFORE SUBMISSION
 void List::printList()
 {
 	int index;
