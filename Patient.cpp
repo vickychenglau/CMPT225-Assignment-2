@@ -124,13 +124,10 @@ bool Patient::operator==(const Patient& rhs){
 // Description: Greater than operator. Compares "this" Patient object with "rhs" Patient object.
 //              Returns true if the care card number of "this" Patient object is > the care card number of "rhs" Patient object.
 bool Patient::operator>(const Patient & rhs){
-	int index;
 	string rhsCareCard = rhs.getCareCard();
 
-	for( index=0; index<10; index++ ){
-		if( careCard[index] > rhsCareCard[index] ){
-			return true;
-		}
+	if(careCard > rhsCareCard){
+		return true;
 	}
 
 	return false;
