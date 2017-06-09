@@ -7,7 +7,7 @@
  *				Data isn't saved after the program is exited
  *
  * Last modified on: May 29, 2017
- * Author: Vicky Lau
+ * Author: Vicky Lau, Jacky Tse
  */
 
 #include <string>
@@ -108,30 +108,6 @@ string careCardPrompt(){
 	return aCareCard;
 }
 
-// Description: Returns true if care card is in list
-// Preconditon: aCareCard is a valid care card number
-bool inList( List list, string aCareCard ){
-	Patient check = Patient( aCareCard );
-
-	if( list.search( check ) != NULL ){ // Meaning it exists in list
-		return true;
-	}
-
-	return false;
-}
-
-// Descriptions: Checks to see if the list has any patients.
-//				 If it's empty, tells the user there are no patients in the system
-bool checkListEmpty( List list ){
-	if( list.getElementCount() > 0 ){
-		return false;
-	}
-
-	cout << " There are currently no patients in the system." << endl;
-	return true;
-
-}
-
 
 int main(void){
 	int 	mainInput 	  = 0;
@@ -182,20 +158,20 @@ int main(void){
 
 			strInput = careCardPrompt();
 
-			if( isTenDigits( strInput ) && !inList( list, strInput ) ){
+			//if( isTenDigits( strInput ) && !inList( list, strInput ) ){
+			if( isTenDigits( strInput ) ){
 				entry = Patient( strInput );
 
-				if( list.insert( entry ) ){
+				if( list.search( entry ) == NULL && list.insert( entry ) ){
 					cout << " Patient " << entry.getCareCard() 
 					     << " has been successfully added." << endl;
 				}
 				else{
-					cout << " Error. System is full." << endl;
+					cout << " Error. Patient was not added." << endl;
 				}
 			}
 			else{
-				cout << " Error. Either the CareCard " << strInput 
-					 << " is invalid or already exists in the system." << endl;
+				cout << " Error. The CareCard " << strInput<< " is invalid." << endl;
 			}
 			
 		}
@@ -203,13 +179,12 @@ int main(void){
 		// Remove a patient
 		else if( mainInput == REMOVE ){ 
 			cout << "Removing a Patient:" << endl;
-			if( !checkListEmpty( list ) ){
 				strInput = careCardPrompt();
 
-				if( isTenDigits( strInput ) && inList( list, strInput ) ){
+				if( isTenDigits( strInput ) ){
 					entry = Patient( strInput );
 
-					if( list.remove(entry) ){
+					if( list.search( entry ) != NULL && list.remove(entry) ){
 						cout << " Patient " << strInput 
 						     << " has been successfully removed." << endl;
 					}
@@ -218,19 +193,16 @@ int main(void){
 					}
 				}
 				else{
-					cout << " Error. The CareCard " << strInput
-						 << " does not exist in the system." << endl;
+					cout << " Error. The CareCard " << strInput<< " is invalid." << endl;
 				}
-			}
 		}
 
 		// Search for a patient
 		else if( mainInput == SEARCH ){ 
 			cout << "Searching for a Patient:" << endl;
-			if( !checkListEmpty( list ) ){
 				strInput = careCardPrompt();
 
-				if( isTenDigits( strInput ) && inList( list, strInput ) ){
+				if( isTenDigits( strInput ) ){
 					entry = Patient( strInput );
 					entryPtr = list.search( entry );
 
@@ -246,19 +218,16 @@ int main(void){
 					}
 				}
 				else{
-					cout << " Error. The CareCard " << strInput
-						 << " does not exist in the system." << endl;
-				}
-			}			
+					cout << " Error. The CareCard " << strInput<< " is invalid." << endl;
+				}		
 		}
 
 		// Modify a Patient
 		else if( mainInput == MODIFY ){ 
 			cout << "Modifying a Patient:" << endl;
-			if( !checkListEmpty( list ) ){
 				strInput = careCardPrompt();
 
-				if( isTenDigits( strInput ) && inList( list, strInput ) ){
+				if( isTenDigits( strInput ) ){
 					entry = Patient( strInput );
 					entryPtr = list.search( entry );
 
@@ -302,31 +271,25 @@ int main(void){
 					}	
 				}
 				else{
-					cout << " Error. The CareCard " << strInput
-						 << " does not exist in the system." << endl;
+					cout << " Error. The CareCard " << strInput<< " is invalid." << endl;
 				}
-			}	
 		}
 
 		// Prints a list of patients
 		else if( mainInput == PRINT ){ 
 			cout << "List of Patients:" << endl;
-
-			if( !checkListEmpty( list ) ){
-				list.printList();
-			}	
+			list.printList();
 		}
 
 		// Removes all patients
 		else if( mainInput == REMOVE_ALL ){
 			cout << "Removing all Patient:" << endl;
-			if( !checkListEmpty( list ) ){
-				list.removeAll();
 
-				cout << " All records of patients have been deleted." << endl;
+			list.removeAll();
+
+			cout << " All records of patients have been deleted." << endl;
 			}			
 		}
-	}
 
 	cout << endl;
 	cout << "Thank you for using the Walk-In Clinic Patient System!" << endl;
