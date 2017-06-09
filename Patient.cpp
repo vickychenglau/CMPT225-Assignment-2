@@ -7,7 +7,7 @@
  *                  This care card number cannot be modified. 
  *
  * Last modified on: May 29, 2017
- * Author: Vicky Lau
+ * Author: Vicky Lau, Jacky Tse
  */
 
 #include <string>
@@ -26,8 +26,6 @@ Patient::Patient() : name("To be entered"),
 					 phone("To be entered"),
 					 email("To be entered"),
 					 careCard("0000000000") {
-
-
 }
 
 // Parameterized Constructor
