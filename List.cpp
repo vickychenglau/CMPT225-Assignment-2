@@ -47,13 +47,13 @@ List::~List(){
 void List::resize(int firstDigit)
 {
 	capacity[firstDigit] = capacity[firstDigit] * 2;
-	cout << "Capacity " << capacity[firstDigit] << endl;
+	//cout << "Capacity " << capacity[firstDigit] << endl;
 	Patient * temp = new Patient[capacity[firstDigit]];
 
 	int index;
 
 	for( index = 0; index < elementCount[firstDigit]; index++ ){
-		cout << "before resize: " << elementPtr[firstDigit][index].getCareCard() << endl;
+		//cout << "before resize: " << elementPtr[firstDigit][index].getCareCard() << endl;
 	}
 
 	copy(elementPtr[firstDigit], elementPtr[firstDigit] + capacity[firstDigit]/2, temp);
@@ -61,7 +61,7 @@ void List::resize(int firstDigit)
 	delete [] elementPtr[firstDigit];
 
 	for( index = 0; index < elementCount[firstDigit]; index++ ){
-		cout << "after resize: " << temp[index].getCareCard() << endl;
+		//cout << "after resize: " << temp[index].getCareCard() << endl;
 	}
 
 	elementPtr[firstDigit] = temp;
@@ -132,7 +132,7 @@ bool List::remove( const Patient& toBeRemoved ){
 	int firstDigit = firstCareCardNum(toBeRemoved);
 
 	Patient temp;
-	while(index < getElementCount() && duplicate == false) //Done to find the i
+	while(index < elementCount[firstDigit] && duplicate == false) //Done to find the i
 	{
 		temp = elementPtr[firstDigit][index];
 		if(temp == toBeRemoved)
