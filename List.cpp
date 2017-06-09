@@ -125,7 +125,45 @@ bool List::insert(const Patient& newElement)
 //              If the removal is successful, true is returned otherwise, false is returned.
 // Postcondition: toBeRemoved is removed, the appropriate elementCount has been decremented.	
 bool List::remove( const Patient& toBeRemoved ){
-	return true;
+
+	bool duplicate = false;
+
+	int index = 0;
+	int firstDigit = firstCareCardNum(toBeRemoved);
+
+	Patient temp;
+	while(index < getElementCount() && duplicate == false) //Done to find the i
+	{
+		temp = elementPtr[firstDigit][index];
+		if(temp == toBeRemoved)
+		{
+			//cout << "Duplicate Found! Time to sift positions" << endl;
+			duplicate = true;
+		}
+		else
+		{
+			index++;
+		}
+	}
+	//cout << getElementCount() << " and the index is " << index << " and the bool is" << duplicate << endl;
+	if(!duplicate)
+	{
+		return(false);
+	}
+
+	while(index < elementCount[firstDigit]-1) //Simple Swap so the deleted one is at an invalid elementcount 
+	{
+		temp = elementPtr[firstDigit][index];
+		elementPtr[firstDigit][index] = elementPtr[firstDigit][index+1];
+		elementPtr[firstDigit][index+1] = temp;
+		index++;
+	}
+	/*temp = elements[index];
+	elements[index] = elements[getElementCount()-1];
+	elements[getElementCount()-1] = temp;
+	//cout << getElementCount() << " and the index is " << i << " and the bool is" << duplicate << endl;*/
+	elementCount[firstDigit]--;
+	return(true);
 }
 	
 // Description: Remove all elements.
